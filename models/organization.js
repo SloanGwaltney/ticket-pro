@@ -1,6 +1,6 @@
 import { auditDataSchema } from "./auditData";
 import {Schema, model} from 'mongoose'
-
+import mongoose from "mongoose";
 const organizationSchema = new Schema({
 	orgName: {
 		type: String,
