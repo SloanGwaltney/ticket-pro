@@ -1,4 +1,4 @@
-import { withDB } from "../../../lib/reqExtenders"
+import { requestPipe, withDB } from "../../../lib/reqExtenders"
 import { User } from "../../../models/user"
 import { createAsyncResult } from "../../../lib/flowControl"
 import { createServiceErrorBody } from "../../../lib/responseBodies"
@@ -7,8 +7,8 @@ import {ironOptions} from '../../../lib/config'
 
 export default withIronSessionApiRoute(handler, ironOptions)
 
-export async function handler (req, res) {
-	if (req.method === 'POST') await withDB(req, res, postHandler) 
+async function handler (req, res) {
+	if (req.method === 'POST') requestPipe(req, res, postHandler, withDB)
 }
 
 async function postHandler(req, res) {

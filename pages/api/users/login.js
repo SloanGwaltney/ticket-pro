@@ -1,14 +1,14 @@
 import {User} from '../../../models/user'
 import {createAsyncResult, handle500Error} from '../../../lib/flowControl'
 import {compare} from 'bcryptjs'
-import { withDB } from '../../../lib/reqExtenders'
+import { requestPipe, withDB } from '../../../lib/reqExtenders'
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { ironOptions } from '../../../lib/config'
 
 export default withIronSessionApiRoute(handler, ironOptions)
 
 async function handler(req, res) {
-	if (req.method === 'POST') await withDB(req, res, postHandler)
+	if (req.method === 'POST') return requestPipe(req, res, postHandler, withDB)
 }
 
 async function postHandler(req, res) {
